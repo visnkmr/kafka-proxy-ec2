@@ -14,6 +14,7 @@ async fn send_to_kafka(messages: Vec<Message>) -> Result<(), kafka::error::Error
     let mut producer = Producer::from_hosts(vec!("localhost:9092".to_owned()))
         .with_ack_timeout(Duration::from_secs(5))
         .with_required_acks(RequiredAcks::One)
+        .with_compression(kafka::client::Compression::SNAPPY)
         .create()?;
 
     for message in messages {
